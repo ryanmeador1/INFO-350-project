@@ -1,13 +1,18 @@
 const express = require(`express`);
 const app = express();
 
-
 app.get('/', (req, res) => {
-  res.json({ message: `This is your first API message`});
+  res.json({ message:greetings});
 });
+
 
 app.get('/api/message', (req, res) => {
   res.json({ message: `This is your first API message`});
+});
+
+app.get('/',(req,res)=>{
+  const greetings = process.env.greetings || 'Alternative hello!'
+
 });
 
 app.listen(3000, () => {
