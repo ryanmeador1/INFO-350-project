@@ -9,7 +9,7 @@ app.get('/api/message', (req, res) => {
   res.json({ message: `This is your first API message`});
 });
 
-const greetings = process.env.greetings || 'Alternative hello!';
+const greetings = process.env.GREETINGS || 'Alternative hello!';
 
 app.get('/', (req, res) => {
   res.json({ message:greetings});
