@@ -1,6 +1,11 @@
 const express = require(`express`);
 const app = express();
 
+
+app.get('/', (req, res) => {
+  res.json({ message: `This is your first API message`});
+});
+
 app.get('/api/message', (req, res) => {
   res.json({ message: `This is your first API message`});
 });
@@ -18,3 +23,4 @@ if(!name || !note){
 }
 res.status(201).json({message: 'Note recevived!',data:{name,note}}); 
 });
+
