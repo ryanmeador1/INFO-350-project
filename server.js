@@ -1,27 +1,35 @@
-const express = require(`express`);
-const app = express();
+const express = require('express');  
+const cors = require('cors'); 
+const app = express(); 
+const PORT = process.env.PORT || 3000; 
+const HELLO = process.env.HELLO || 'Hello from Backend'; 
+const NAME = process.env.NAME || 'Ryan';
+const BOOK = [];
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
-});
-
-app.get('/api/message', (req, res) => {
-  res.json({ message: `This is your first API message`});
-});
-
-const greetings = process.env.GREETINGS || 'Alternative hello!';
-
-app.get('/', (req, res) => {
-  res.json({ message:greetings});
-});
-
+app.use(cors()); 
 app.use(express.json()); 
-
-app.post('/api/notes',(req,res)=>{
-const{name,note} = req.body; 
-if(!name || !note){
-  return res.status(400).json({error:'Both name and note are required'}); 
-}
-res.status(201).json({message: 'Note recevived!',data:{name,note}}); 
+app.use((req,res,next)=>{
+  console.log(`${req.method} ${req.url}`);
+  next(); 
 });
 
+app.get('/api/items',(req,res)=>{
+  res.json({Name: NAME}); 
+}); 
+
+app.get('/api/books',(req,res)=>{
+  res.json(BOOK)
+});
+
+app.post('/api/books',(req,res)=>{
+  const newBook = req.body; 
+  res.status(201).json(newBook);
+  BOOK.push(newBook);  
+});
+
+app.get("/api/hello",(req,res)=>{
+  res.json({message: HELLO}); 
+});
+app.listen(PORT,()=>{
+  console.log(`Listening on port ${PORT}`); 
+}); 
